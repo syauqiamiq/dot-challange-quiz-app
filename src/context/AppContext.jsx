@@ -2,18 +2,9 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import APIServices from "../api/api";
 
-const table = {
-  sports: 21,
-  history: 23,
-  politics: 24,
-};
-
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  useEffect(() => {
-    getQuestions();
-  }, []);
   const [questions, setQuestions] = useState([]);
   const [waiting, setWaiting] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -85,8 +76,7 @@ export const AppProvider = ({ children }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { amount, category, difficulty } = quiz;
-    const url = `${APIServices.apiURL}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
+    const url = APIServices.apiURL;
     getQuestions(url);
   };
 
