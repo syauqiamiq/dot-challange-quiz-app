@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, Spinner } from "react-bootstrap";
 import APIServices from "../../api/api";
 import { useGlobalContext } from "../../context/AppContext";
+import { LoginContext } from "../../context/LoginContext";
 
 const QuizFormComponent = () => {
   const { handleSubmit, error, data, setData } = useGlobalContext();
+  const { handleLogout } = useContext(LoginContext);
 
   useEffect(() => {
     axios
@@ -33,7 +35,10 @@ const QuizFormComponent = () => {
         ) : (
           <Spinner animation="border" variant="light" />
         )}
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-between">
+          <Button variant="primary" onClick={handleLogout} className="actionButton">
+            Logout
+          </Button>
           <Button variant="primary" onClick={handleSubmit} className="actionButton">
             Mulai Quiz
           </Button>

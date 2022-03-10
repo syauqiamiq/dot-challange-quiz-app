@@ -5,12 +5,15 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AppProvider } from "./context/AppContext";
 import "./assets/css/style.css";
+import { LoginProvider } from "./context/LoginContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <LoginProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </LoginProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

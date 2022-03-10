@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CardQuestionComponent from "../components/questions/CardQuestionComponent.jsx";
 import CardResultComponent from "../components/questions/CardResultComponent.jsx";
 import QuizFormComponent from "../components/questions/QuizFormComponent.jsx";
 import { useGlobalContext } from "../context/AppContext";
+import { LoginContext } from "../context/LoginContext.jsx";
 
 const QuestionPage = () => {
   const { loading, waiting, isFinished } = useGlobalContext();
+  const { auth, setAuth } = useContext(LoginContext);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (sessionStorage.getItem("dummy_token") !== null) {
+      setAuth(true);
+    } else {
+      setAuth(false);
+    }
+  });
+  if (!auth) {
+    navigate("/");
+  }
 
   if (waiting) {
     return (

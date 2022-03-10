@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useGlobalContext } from "./context/AppContext";
+import { LoginContext } from "./context/LoginContext";
 import AppRoutes from "./routes/AppRoutes";
 
 function App() {
@@ -7,6 +8,11 @@ function App() {
   useEffect(() => {
     verifySession();
   }, []);
+
+  const { verifyLogin, auth } = useContext(LoginContext);
+  useEffect(() => {
+    verifyLogin();
+  }, [auth]);
   return (
     <div>
       <AppRoutes />
