@@ -1,0 +1,25 @@
+.question {
+  margin-top: 20px;
+  font-size: 18px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  color: #f9b53a;
+}
+
+.question-card {
+  margin-top: 100px;
+  width: 30rem;
+  background-color: #1f1f21 !important;
+  box-shadow: 1px 0px 200px #f9b63a9f;
+  border-width: 1px;
+  border-color: #3d3d3d;
+  border-radius: 8px;
+}
+
+.button-text {
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  color: #fafafa;
+}

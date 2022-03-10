@@ -8,6 +8,7 @@ export const AppProvider = ({ children }) => {
   const [questions, setQuestions] = useState([]);
   const [waiting, setWaiting] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isStarted, setIsStarted] = useState(false);
   const [index, setIndex] = useState(0);
   const [error, setError] = useState(false);
   const [correct, setCorrect] = useState(0);
@@ -17,6 +18,34 @@ export const AppProvider = ({ children }) => {
     category: "sport",
     difficulty: "easy",
   });
+  const [timerDays, setTimerDays] = useState();
+  const [timerHours, setTimerHours] = useState();
+  const [timerMinutes, setTimerMinutes] = useState();
+  const [timerSecond, setTimerSecond] = useState();
+  let interval;
+  const startTimer = () => {
+    const endQuiz = new Date();
+    endQuiz.setHours(endQuiz.getHours() + 2);
+    interval = setInterval(() => {
+      let now = new Date().getTime();
+      let difference = endQuiz - now;
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+      if (difference < 0) {
+        //STOP TIMER
+        clearInterval(interval.current);
+      } else {
+        //UPDATE
+        setTimerDays(days);
+        setTimerHours(hours);
+        setTimerMinutes(minutes);
+        setTimerSecond(seconds);
+      }
+    });
+  };
+
   const getQuestions = async (api) => {
     try {
       setLoading(true);
@@ -56,6 +85,16 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  const previousQuestions = () => {
+    setIndex((oldIndex) => {
+      if (index === 0) {
+        return 0;
+      } else {
+        const index = oldIndex - 1;
+        return index;
+      }
+    });
+  };
   const checkAnswer = (value) => {
     if (value) {
       setCorrect(correct + 1);
@@ -78,11 +117,16 @@ export const AppProvider = ({ children }) => {
     e.preventDefault();
     const url = APIServices.apiURL;
     getQuestions(url);
+    // startTimer();
   };
 
   return (
     <AppContext.Provider
       value={{
+        timerDays,
+        timerHours,
+        timerMinutes,
+        timerSecond,
         questions,
         setQuestions,
         waiting,
@@ -100,6 +144,7 @@ export const AppProvider = ({ children }) => {
         quiz,
         setQuiz,
         nextQuestions,
+        previousQuestions,
         checkAnswer,
         closeModal,
         handleChange,

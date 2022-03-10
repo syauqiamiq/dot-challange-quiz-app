@@ -1,0 +1,50 @@
+.quiz-card {
+  margin-top: 200px;
+  width: 30rem;
+  background-color: #1f1f21 !important;
+  box-shadow: 1px 0px 200px #f9b63a9f;
+  border-width: 1px;
+  border-color: #3d3d3d;
+  border-radius: 8px;
+}
+.card-title {
+  margin-top: 20px;
+  font-size: 35px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+  color: #f9b53a;
+}
+
+.quiz-info-content {
+  letter-spacing: 1px;
+  font-size: 16px;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  color: #fafafa;
+  line-height: 28px;
+  text-align: justify;
+}
+
+.actionButton {
+  color: #fafafa;
+  font-family: "DM Sans", sans-serif;
+  border-width: 1px;
+  border-color: #fafafa;
+  border-radius: 5px;
+  background-color: transparent;
+}
+.actionButton:hover {
+  background-color: #fafafa;
+  color: black;
+  border-color: black;
+}
+.actionButton:focus {
+  outline: none !important;
+  font-family: "DM Sans", sans-serif;
+  border-width: 1px;
+  border-radius: 5px;
+  box-shadow: none;
+  background-color: #fafafa;
+  color: black;
+  border-color: black;
+}
