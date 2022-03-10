@@ -5,8 +5,7 @@ import APIServices from "../../api/api";
 import { useGlobalContext } from "../../context/AppContext";
 
 const QuizFormComponent = () => {
-  const { handleSubmit, error } = useGlobalContext();
-  const [data, setData] = useState([]);
+  const { handleSubmit, error, data, setData } = useGlobalContext();
 
   useEffect(() => {
     axios

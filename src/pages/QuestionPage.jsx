@@ -1,11 +1,13 @@
 import React from "react";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import CardQuestionComponent from "../components/questions/CardQuestionComponent.jsx";
+import CardResultComponent from "../components/questions/CardResultComponent.jsx";
 import QuizFormComponent from "../components/questions/QuizFormComponent.jsx";
 import { useGlobalContext } from "../context/AppContext";
 
 const QuestionPage = () => {
   const { loading, waiting, isFinished } = useGlobalContext();
+
   if (waiting) {
     return (
       <Container fluid>
@@ -36,7 +38,7 @@ const QuestionPage = () => {
         <div style={{ marginTop: 200 }}>
           <Row>
             <Col className="d-flex justify-content-center" xs={12} sm={12} md={12} lg={12} xl={12}>
-              <h1>NILAI 100</h1>
+              <CardResultComponent />
             </Col>
           </Row>
         </div>

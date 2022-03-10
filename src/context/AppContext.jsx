@@ -5,6 +5,8 @@ import APIServices from "../api/api";
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const [data, setData] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [waiting, setWaiting] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -34,6 +36,7 @@ export const AppProvider = ({ children }) => {
       const seconds = Math.floor((difference / 1000) % 60);
       if (difference < 0) {
         //STOP TIMER
+        setIsModalOpen(true);
         clearInterval(interval.current);
       } else {
         //UPDATE
@@ -54,22 +57,26 @@ export const AppProvider = ({ children }) => {
     if (tempIndex === 3) {
       answer.push(correct_answer);
       localStorage.setItem("answer", JSON.stringify(answer));
+      setAnswer(answer);
     } else {
       answer.push(answer[tempIndex]);
       answer[tempIndex] = correct_answer;
       localStorage.setItem("answer", JSON.stringify(answer));
+      setAnswer(answer);
     }
   };
   const getQuestions = async (api) => {
     try {
       setLoading(true);
+      setIsFinished(false);
       setWaiting(false);
       const response = await axios.get(api).catch((err) => console.log(err));
       if (response) {
         const data = response.data.results;
         if (data.length !== 0) {
           const endQuiz = new Date();
-          endQuiz.setHours(endQuiz.getHours() + 2);
+          // endQuiz.setSeconds(endQuiz.getSeconds() + 30); // DEMO TIMER
+          endQuiz.setMinutes(endQuiz.getMinutes() + 5);
           localStorage.setItem("current_index", 0);
           localStorage.setItem("isStarted", true);
           localStorage.setItem("expired", endQuiz);
@@ -94,17 +101,16 @@ export const AppProvider = ({ children }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+
   const submitModal = () => {
     setIsFinished(true);
+    localStorage.clear();
     setIsModalOpen(false);
   };
 
   const nextQuestions = async () => {
     setIndex((oldIndex) => {
-      const index = oldIndex + 1;
+      const index = parseInt(oldIndex) + 1;
       if (index > questions.length - 1) {
         openModal();
         return oldIndex;
@@ -117,9 +123,8 @@ export const AppProvider = ({ children }) => {
 
   const checkAnswer = (value) => {
     const questions = JSON.parse(localStorage.getItem("question"));
-    console.log(questions[index].correct_answer);
     if (value === questions[index].correct_answer) {
-      localStorage.setItem("correct", correct + 1);
+      localStorage.setItem("correct", parseInt(correct) + 1);
       setCorrect(correct + 1);
     }
     nextQuestions();
@@ -131,9 +136,48 @@ export const AppProvider = ({ children }) => {
     getQuestions(url);
   };
 
+  const verifySession = () => {
+    const isStarted = localStorage.getItem("isStarted");
+
+    if (isStarted === null) {
+      setAnswer([]);
+      setQuestions([]);
+      setCorrect(0);
+      setIndex(0);
+      setTimerDays(0);
+      setTimerHours(0);
+      setTimerMinutes(0);
+      setTimerSecond(0);
+      setWaiting(true);
+      setIsFinished(false);
+      return;
+    }
+    setWaiting(false);
+    const answer = JSON.parse(localStorage.getItem("answer"));
+    const questions = JSON.parse(localStorage.getItem("question"));
+    const correct = localStorage.getItem("correct");
+    const index = localStorage.getItem("current_index");
+    setAnswer(answer);
+    setQuestions(questions);
+    setCorrect(parseInt(correct));
+    setIndex(parseInt(index));
+
+    startTimer();
+  };
+
+  const handleRedirect = (e) => {
+    e.preventDefault();
+    window.location.reload();
+  };
   return (
     <AppContext.Provider
       value={{
+        handleRedirect,
+        answer,
+        setAnswer,
+        data,
+        setData,
+        verifySession,
         submitModal,
         isFinished,
         setIsFinished,
@@ -159,7 +203,6 @@ export const AppProvider = ({ children }) => {
         setQuiz,
         nextQuestions,
         checkAnswer,
-        closeModal,
         handleSubmit,
         getAnswer,
       }}

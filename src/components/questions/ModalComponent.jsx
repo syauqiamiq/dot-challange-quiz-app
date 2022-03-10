@@ -3,19 +3,19 @@ import { Button, Modal } from "react-bootstrap";
 import { useGlobalContext } from "../../context/AppContext";
 
 const ModalComponent = () => {
-  const { submitModal, closeModal, isModalOpen } = useGlobalContext();
+  const { submitModal, isModalOpen, correct, questions } = useGlobalContext();
 
   return (
     <>
-      <Modal show={isModalOpen} onHide={closeModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Konfirmasi</Modal.Title>
+      <Modal show={isModalOpen}>
+        <Modal.Header>
+          <Modal.Title>Quiz Telah Selesai</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Jumlah Benar 10</Modal.Body>
+        <Modal.Body>
+          <p>Jumlah Jawaban Benar: {correct}</p>
+          <p>Jumlah Soal: {questions.length}</p>
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
-            Close
-          </Button>
           <Button variant="primary" onClick={submitModal}>
             Save Changes
           </Button>

@@ -4,15 +4,15 @@ import { Card } from "react-bootstrap";
 import { useGlobalContext } from "../../context/AppContext";
 import ModalComponent from "./ModalComponent";
 const CardQuestionComponent = () => {
-  const { timerSecond, timerDays, timerMinutes, timerHours, checkAnswer, index, getAnswer, questions } = useGlobalContext();
+  const { timerSecond, timerDays, timerMinutes, timerHours, checkAnswer, index, getAnswer, questions, answer, correct } = useGlobalContext();
   useEffect(() => {
     getAnswer();
   }, [index]);
-  const correct = localStorage.getItem("correct");
 
+  if (localStorage.getItem("isStarted") === null) {
+    window.location.reload();
+  }
   const { question } = questions[index];
-
-  const answer = JSON.parse(localStorage.getItem("answer"));
 
   return (
     <Card className="question-card">
@@ -22,19 +22,19 @@ const CardQuestionComponent = () => {
         </h3>
         <h3 className="quiz-info-content">Correct: {correct} </h3>
         <h3 className="quiz-info-content">
-          Nomor Soal: {index + 1} dari {questions.length}{" "}
+          Nomor Soal: {parseInt(index) + 1} dari {questions.length}{" "}
         </h3>
         <h3 className="quiz-info-content">Pertanyaan:</h3>
         <h3 className="question mb-5">{parse(question)}</h3>
         <h3 className="quiz-info-content">Answer:</h3>
-        {answer.map((value, index) => {
+        {answer.map((value, i) => {
           return (
-            <>
-              <label type="button" value={value} onClick={() => checkAnswer(value)} key={index} className=" btn btn-primary d-block  w-100 mt-2 button-text actionButton">
+            <div key={i}>
+              <label type="button" value={value} onClick={() => checkAnswer(value)} className=" btn btn-primary d-block  w-100 mt-2 button-text actionButton">
                 {parse(value)}
               </label>
               <ModalComponent />
-            </>
+            </div>
           );
         })}
       </Card.Body>
