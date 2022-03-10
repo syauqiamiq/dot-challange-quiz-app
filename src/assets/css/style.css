@@ -3,6 +3,7 @@
 @import "question_card.css";
 @import "navigation_question.css";
 @import "result_card.css";
+@import "card_login.css";
 
 body {
   background-color: #171718 !important;
