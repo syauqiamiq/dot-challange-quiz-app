@@ -5,7 +5,7 @@ import APIServices from "../../api/api";
 import { useGlobalContext } from "../../context/AppContext";
 
 const QuizFormComponent = () => {
-  const { handleChange, handleSubmit, error } = useGlobalContext();
+  const { handleSubmit, error } = useGlobalContext();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,6 @@ const QuizFormComponent = () => {
       .then(function (response) {
         const res = response.data.results;
         setData(res);
-        console.log(res);
       })
       .catch(function (error) {
         // handle error

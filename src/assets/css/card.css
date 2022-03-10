@@ -33,6 +33,7 @@
   border-radius: 5px;
   background-color: transparent;
 }
+
 .actionButton:hover {
   background-color: #fafafa;
   color: black;
@@ -40,11 +41,11 @@
 }
 .actionButton:focus {
   outline: none !important;
+  color: #fafafa;
   font-family: "DM Sans", sans-serif;
   border-width: 1px;
+  border-color: #fafafa;
   border-radius: 5px;
+  background-color: transparent;
   box-shadow: none;
-  background-color: #fafafa;
-  color: black;
-  border-color: black;
 }
