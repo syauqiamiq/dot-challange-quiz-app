@@ -5,7 +5,8 @@ Project ini dibuat menggunakan react sesuai ketentuan requirement yang disediaka
 ## Cara Menggunakan Project
 
 Di dalam direktori project jalankan perintah
-
+### `npm install`
+Lalu jalankan
 ### `npm start`
 
 Buka `localhost:3000` pada browser
