@@ -16,8 +16,12 @@ const QuestionPage = () => {
       setAuth(true);
     } else {
       setAuth(false);
+      window.location.reload();
     }
   });
+  if (sessionStorage.getItem("dummy_token") === null) {
+    window.location.reload();
+  }
   if (!auth) {
     navigate("/");
   }
