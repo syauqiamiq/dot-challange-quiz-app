@@ -4,7 +4,7 @@ Project ini dibuat menggunakan react sesuai ketentuan requirement yang disediaka
 
 ## Cara Menggunakan Project
 
-Didalam Project Direktori jalankan perintah
+Di dalam direktori project jalankan perintah
 
 ### `npm start`
 
